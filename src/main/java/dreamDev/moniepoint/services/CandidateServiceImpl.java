@@ -20,14 +20,15 @@ import static dreamDev.moniepoint.utils.Mapper.map;
 public class CandidateServiceImpl implements CandidateService {
     @Autowired
     private CandidateRepository candidateRepository;
-    @Autowired private ElectionRepository electionRepository;
+    @Autowired
+    private ElectionRepository electionRepository;
 
     @Override
     public CandidateResponse addCandidate(AddCandidateRequest request) {
         Election election = electionRepository.findById(request.getElectionId())
             .orElseThrow(() -> new ElectionNotFoundException("Election not found"));
 
-        if(candidateRepository.existsByNameAndElectionId(request.getName().trim(), request.getElectionId())) {
+        if(candidateRepository.existsByNameAndPartyAndElectionId(request.getName().trim(),request.getParty() , request.getElectionId())) {
             throw new CandidateNotFoundException("Candidate already exists");
         }
 

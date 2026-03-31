@@ -5,6 +5,7 @@ import dreamDev.moniepoint.dtos.requests.LogoutRequest;
 import dreamDev.moniepoint.dtos.requests.UserRegistrationRequest;
 import dreamDev.moniepoint.dtos.responses.ApiResponse;
 import dreamDev.moniepoint.exceptions.ElectionException;
+import dreamDev.moniepoint.exceptions.UserException;
 import dreamDev.moniepoint.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class UserController {
     public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
             return new ResponseEntity<>(new ApiResponse(true, userService.login(loginRequest.getEmail(), loginRequest.getPassword())), HttpStatus.OK);
-        } catch (ElectionException e) {
+        } catch (UserException e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
@@ -40,7 +41,7 @@ public class UserController {
     public ResponseEntity<ApiResponse> logout(@RequestBody LogoutRequest logoutRequest) {
         try {
             return new ResponseEntity<>(new ApiResponse(true, userService.logout(logoutRequest.getLoginId())), HttpStatus.OK);
-        } catch (ElectionException e) {
+        } catch (UserException e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }

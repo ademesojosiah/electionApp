@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CandidateRepository extends MongoRepository<Candidate, String> {
     List<Candidate> findByElectionId(String electionId);
-    boolean existsByNameAndElectionId(String name, String electionId);
+    boolean existsByNameAndPartyAndElectionId(String name, String party, String electionId);
 }
