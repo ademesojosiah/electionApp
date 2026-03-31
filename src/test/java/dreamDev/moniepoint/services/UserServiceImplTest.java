@@ -2,6 +2,10 @@ package dreamDev.moniepoint.services;
 
 import dreamDev.moniepoint.data.repositories.UserRepository;
 import dreamDev.moniepoint.dtos.requests.UserRegistrationRequest;
+import dreamDev.moniepoint.dtos.responses.LoginResponse;
+import dreamDev.moniepoint.exceptions.DuplicateUserException;
+import dreamDev.moniepoint.exceptions.InvalidCredentialsException;
+import dreamDev.moniepoint.exceptions.UserNotLoggedInException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,7 @@ class UserServiceImplTest {
     void setUp(){
         userRepository.deleteAll();
         registrationRequest = new UserRegistrationRequest();
-        registrationRequest.setEmail("email");
+        registrationRequest.setEmail("jojo@mail.com");
         registrationRequest.setFirstName("firstName");
         registrationRequest.setLastName("lastName");
         registrationRequest.setPassword("password");
@@ -34,5 +38,36 @@ class UserServiceImplTest {
         assertFalse(userRepository.findByEmail(registrationRequest.getEmail()).isPresent());
         userService.register(registrationRequest);
         assertTrue(userRepository.findByEmail(registrationRequest.getEmail()).isPresent());
+    }
+
+    @Test
+    void registerUser_withDuplicateEmail_throwsExceptionTest() {
+        userService.register(registrationRequest);
+        assertThrows(DuplicateUserException.class, () -> userService.register(registrationRequest));
+    }
+
+    @Test
+    void login_validCredentials_returnsLoginIdAndUserIdTest() {
+        userService.register(registrationRequest);
+        LoginResponse response = userService.login("jojo@mail.com", "password");
+
+        assertNotNull(response.getLoginId());
+        assertNotNull(response.getUserId());
+        assertEquals("Login successful", response.getMessage());
+    }
+
+
+    @Test
+    void login_invalidPassword_throwsException() {
+        userService.register(registrationRequest);
+        assertThrows(InvalidCredentialsException.class,
+                () -> userService.login("jojo@mail.com", "wrongPass"));
+    }
+
+
+    @Test
+    void logout_withInvalidLoginId_throwsException() {
+        assertThrows(UserNotLoggedInException.class,
+                () -> userService.logout("invalid-login-id"));
     }
 }

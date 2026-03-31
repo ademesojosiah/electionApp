@@ -4,10 +4,10 @@ package dreamDev.moniepoint.utils;
 
 import dreamDev.moniepoint.data.models.User;
 import dreamDev.moniepoint.dtos.requests.UserRegistrationRequest;
+import dreamDev.moniepoint.dtos.responses.LoginResponse;
 import dreamDev.moniepoint.dtos.responses.UserRegistrationResponse;
 import dreamDev.moniepoint.enums.Role;
 
-import java.time.format.DateTimeFormatter;
 
 public class Mapper {
     public static User map(UserRegistrationRequest userRegistrationRequest) {
@@ -26,5 +26,13 @@ public class Mapper {
         userRegistrationResponse.setId(savedUser.getId());
         userRegistrationResponse.setRole(savedUser.getRole());
         return userRegistrationResponse;
+    }
+
+    public static LoginResponse map(User user, String loginId) {
+        LoginResponse response = new LoginResponse();
+        response.setUserId(user.getId());
+        response.setLoginId(loginId);
+        response.setMessage("Login successful");
+        return response;
     }
 }
