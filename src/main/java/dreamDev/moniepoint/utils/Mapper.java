@@ -76,7 +76,7 @@ public class Mapper {
     // Candidate mappers
     public static Candidate map(AddCandidateRequest req) {
         Candidate candidate = new Candidate();
-        candidate.setName(req.getName());
+        candidate.setName(req.getName().trim());
         candidate.setParty(req.getParty());
         candidate.setElectionId(req.getElectionId());
         candidate.setVoteCount(0);
