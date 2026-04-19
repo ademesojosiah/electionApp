@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ElectionRepository extends MongoRepository<Election, String> {
+    boolean existsByTitleIgnoreCase(String id);
     Optional<Election> findByTitle(String title);
     List<Election> findByStatus(String status);
 }

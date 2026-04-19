@@ -11,6 +11,7 @@ import dreamDev.moniepoint.dtos.requests.CastVoteRequest;
 import dreamDev.moniepoint.dtos.requests.CreateElectionRequest;
 import dreamDev.moniepoint.dtos.requests.UserRegistrationRequest;
 import dreamDev.moniepoint.dtos.responses.*;
+import dreamDev.moniepoint.enums.ElectionStatus;
 import org.modelmapper.ModelMapper;
 
 
@@ -49,7 +50,7 @@ public class Mapper {
     public static Election map(CreateElectionRequest req) {
         Election election = new Election();
         election.setTitle(req.getTitle());
-        election.setStatus("OPEN");
+        election.setStatus(ElectionStatus.OPEN.toString());
         return election;
     }
 
