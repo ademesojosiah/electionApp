@@ -1,8 +1,10 @@
 package dreamDev.moniepoint.dtos.requests;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CastVoteRequest {
     private String candidateId;
     private String electionId;

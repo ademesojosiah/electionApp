@@ -11,26 +11,19 @@ import dreamDev.moniepoint.dtos.requests.CastVoteRequest;
 import dreamDev.moniepoint.dtos.requests.CreateElectionRequest;
 import dreamDev.moniepoint.dtos.requests.UserRegistrationRequest;
 import dreamDev.moniepoint.dtos.responses.*;
-import dreamDev.moniepoint.enums.Role;
+import org.modelmapper.ModelMapper;
 
 
 public class Mapper {
+
+
     public static User map(UserRegistrationRequest userRegistrationRequest) {
-        User user = new User();
-        user.setFirstName(userRegistrationRequest.getFirstName());
-        user.setLastName(userRegistrationRequest.getLastName());
-        user.setEmail(userRegistrationRequest.getEmail());
-        user.setPassword(userRegistrationRequest.getPassword());
-        user.setRole(Role.USER.name());
-        return user;
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(userRegistrationRequest, User.class);
     }
 
     public static UserRegistrationResponse map(User savedUser) {
-        UserRegistrationResponse userRegistrationResponse = new UserRegistrationResponse();
-        userRegistrationResponse.setEmail(savedUser.getEmail());
-        userRegistrationResponse.setId(savedUser.getId());
-        userRegistrationResponse.setRole(savedUser.getRole());
-        return userRegistrationResponse;
+        return new ModelMapper().map(savedUser, UserRegistrationResponse.class);
     }
 
     public static LoginResponse map(User user, String loginId) {
@@ -50,12 +43,7 @@ public class Mapper {
     }
 
     public static VoteResponse mapToVoteResponse(Vote vote) {
-        VoteResponse res = new VoteResponse();
-        res.setVoteId(vote.getId());
-        res.setCandidateId(vote.getCandidateId());
-        res.setElectionId(vote.getElectionId());
-        res.setCreatedAt(vote.getCreatedAt());
-        return res;
+        return new ModelMapper().map(vote, VoteResponse.class);
     }
 
     public static Election map(CreateElectionRequest req) {
@@ -66,11 +54,7 @@ public class Mapper {
     }
 
     public static ElectionResponse map(Election election) {
-        ElectionResponse res = new ElectionResponse();
-        res.setId(election.getId());
-        res.setTitle(election.getTitle());
-        res.setStatus(election.getStatus());
-        return res;
+        return new ModelMapper().map(election, ElectionResponse.class);
     }
 
     // Candidate mappers
@@ -84,12 +68,6 @@ public class Mapper {
     }
 
     public static CandidateResponse map(Candidate candidate) {
-        CandidateResponse res = new CandidateResponse();
-        res.setId(candidate.getId());
-        res.setName(candidate.getName());
-        res.setParty(candidate.getParty());
-        res.setVoteCount(candidate.getVoteCount());
-        res.setElectionId(candidate.getElectionId());
-        return res;
+        return new ModelMapper().map(candidate,CandidateResponse.class);
     }
 }

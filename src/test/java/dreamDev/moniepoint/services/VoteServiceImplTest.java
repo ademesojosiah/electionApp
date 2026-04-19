@@ -76,7 +76,7 @@ class VoteServiceImplTest {
         CastVoteRequest req = voteRequest();
         VoteResponse response = voteService.castVote(req);
 
-        assertNotNull(response.getVoteId());
+        assertNotNull(response.getId());
         assertEquals(candidateId, response.getCandidateId());
     }
 
