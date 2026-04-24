@@ -9,4 +9,5 @@ public interface UserService {
     UserRegistrationResponse register(UserRegistrationRequest request);
     LoginResponse login(String email, String password);
     LogoutResponse logout(String loginId);
+    UserRegistrationResponse getUser(String loginId);
 }

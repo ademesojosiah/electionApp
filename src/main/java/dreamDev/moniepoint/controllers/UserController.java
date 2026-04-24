@@ -37,6 +37,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{loginId}")
+    public ResponseEntity<ApiResponse> getUser(@PathVariable("loginId") String loginId) {
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.getUser(loginId)), HttpStatus.OK);
+        } catch (UserException e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PatchMapping("/logout")
     public ResponseEntity<ApiResponse> logout(@RequestBody LogoutRequest logoutRequest) {
         try {

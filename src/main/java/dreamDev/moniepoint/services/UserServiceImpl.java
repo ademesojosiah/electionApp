@@ -57,4 +57,11 @@ public class UserServiceImpl implements UserService {
         response.setMessage("Logout successful");
         return response;
     }
+
+    @Override
+    public UserRegistrationResponse getUser(String loginId) {
+        User user = userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new UserNotLoggedInException("No active session found for this loginId"));
+        return map(user);
+    }
 }

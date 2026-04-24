@@ -3,6 +3,7 @@ package dreamDev.moniepoint.services;
 import dreamDev.moniepoint.data.repositories.UserRepository;
 import dreamDev.moniepoint.dtos.requests.UserRegistrationRequest;
 import dreamDev.moniepoint.dtos.responses.LoginResponse;
+import dreamDev.moniepoint.dtos.responses.UserRegistrationResponse;
 import dreamDev.moniepoint.exceptions.DuplicateUserException;
 import dreamDev.moniepoint.exceptions.InvalidCredentialsException;
 import dreamDev.moniepoint.exceptions.UserNotLoggedInException;
@@ -44,6 +45,15 @@ class UserServiceImplTest {
     void registerUser_withDuplicateEmail_throwsExceptionTest() {
         userService.register(registrationRequest);
         assertThrows(DuplicateUserException.class, () -> userService.register(registrationRequest));
+    }
+
+    @Test
+    void registerUser_getUser_returnsUserTest() {
+        userService.register(registrationRequest);
+        LoginResponse loginResponse = userService.login(registrationRequest.getEmail(), registrationRequest.getPassword());
+        UserRegistrationResponse userRegistrationResponse = userService.getUser(loginResponse.getLoginId());
+
+        assertEquals(registrationRequest.getEmail(), userRegistrationResponse.getEmail());
     }
 
     @Test
