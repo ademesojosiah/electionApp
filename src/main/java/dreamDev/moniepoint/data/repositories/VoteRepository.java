@@ -8,6 +8,6 @@ import java.util.List;
 public interface VoteRepository extends MongoRepository<Vote, String> {
     List<Vote> findByElectionId(String electionId);
     List<Vote> findByUserId(String userId);
-    boolean existsByUserIdAndCandidateIdAndElectionId( String userId,String candidateId, String electionId);
+    boolean existsByUserIdAndElectionId( String userId, String electionId);
 
 }

@@ -48,7 +48,7 @@ public class VoteServiceImpl implements VoteService {
         if (!"OPEN".equals(election.getStatus()))
             throw new ElectionNotActiveException("Election is not currently active");
 
-        if(voteRepository.existsByUserIdAndCandidateIdAndElectionId(user.getId(), request.getCandidateId(), request.getElectionId())){
+        if(voteRepository.existsByUserIdAndElectionId(user.getId(), request.getElectionId())){
             throw new ElectionException("Vote has be casted");
         }
 
